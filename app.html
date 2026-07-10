@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>PostalAnnex+ Amazon QR Code Scanner</title>
-    <!-- Open-source library to handle the QR code generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
     <style>
@@ -28,7 +27,7 @@
             width: 380px;
         }
 
-        /* CUSTOM BRANDING LOGO: Clean, modern style matching corporate colors */
+        /* CUSTOM BRANDING LOGO */
         .brand-logo {
             font-size: 28px;
             font-weight: 800;
@@ -53,7 +52,7 @@
             width: 100%;
         }
 
-        /* Input Absolute Placement Frame */
+        /* Input Frame */
         .input-container {
             position: relative;
             width: 100%;
@@ -63,7 +62,7 @@
         input {
             width: 100%;
             box-sizing: border-box;
-            padding: 14px 40px 14px 14px; /* Extra padding on right for the inline X button */
+            padding: 14px 40px 14px 14px;
             font-size: 18px;
             border: 2px solid #ced4da;
             border-radius: 6px;
@@ -73,13 +72,13 @@
         }
         input:focus { border-color: #002f6c; }
 
-        /* Highlight state if text box contains stray keystrokes */
+        /* Highlight state for stray keystrokes */
         .input-error {
             border-color: #dc3545 !important;
             background-color: #fff5f5;
         }
 
-        /* Inline Clear Text Button Frame */
+        /* Clear Button */
         #clearBtn {
             position: absolute;
             right: 12px;
@@ -104,7 +103,7 @@
             color: #212529;
         }
 
-        /* Real-Time Input Warning Label */
+        /* Warnings & Badges */
         #typingWarning {
             display: none;
             margin-top: 8px;
@@ -129,7 +128,6 @@
             font-size: 14px;
         }
 
-        /* Message Box Style */
         #errorMessageContainer {
             display: none;
             margin-top: 15px;
@@ -147,7 +145,7 @@
             animation: blink 1.2s infinite;
         }
 
-        /* Verification Action Prompts Card Base styling */
+        /* Prompts */
         .prompt-container {
             display: none;
             margin-top: 15px;
@@ -189,7 +187,7 @@
             51%, 100% { opacity: 0; }
         }
 
-        /* Layout styles for the on-screen display zone */
+        /* Print Layout Zone */
         #printZone {
             margin-top: 25px;
             display: flex;
@@ -198,7 +196,6 @@
             justify-content: center;
         }
 
-        /* On-Screen Header Notification Text style */
         #printHeader {
             display: none; 
             font-size: 22px;
@@ -209,7 +206,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* Wrapper container for the text box readout and copy button layout */
+        /* Data Wrapper */
         #dataDisplayWrapper {
             position: relative;
             width: 100%;
@@ -217,7 +214,6 @@
             display: none; 
         }
 
-        /* Visually distinct container for on-screen raw data verification */
         #scannedTextDisplay {
             font-size: 12px;
             color: #495057;
@@ -226,7 +222,7 @@
             font-family: monospace;
             background-color: #e9ecef;
             padding: 12px;
-            padding-right: 78px; /* Leave clean breathing room so text never hides behind the copy button */
+            padding-right: 78px; 
             border-radius: 6px;
             border: 1px solid #ced4da;
             max-height: 80px;
@@ -236,7 +232,6 @@
             margin: 0;
         }
 
-        /* Interactive Copy Button inside the console readout box */
         #copyRawBtn {
             position: absolute;
             right: 8px;
@@ -257,6 +252,7 @@
             color: #212529;
         }
 
+        /* Buttons & Footer */
         .button-group {
             display: flex;
             flex-direction: column;
@@ -300,7 +296,6 @@
         }
         #overrideBtn:hover { background-color: #e0a800; }
 
-        /* On-Screen Static Counter Operations Manual Styling */
         #instructions {
             font-size: 12px;
             color: #495057;
@@ -321,7 +316,6 @@
             margin-bottom: 6px;
         }
 
-        /* NEW: Release Tracker Version Metadata Header Style */
         #versionFooter {
             font-size: 10px;
             color: #adb5bd;
@@ -383,25 +377,21 @@
 <body>
 
 <div class="card">
-    <!-- Styled Company Header -->
     <div class="brand-logo">
         <span class="brand-blue">Postal</span><span class="brand-red">Annex</span><span class="brand-blue">+</span>
     </div>
     <div class="brand-subtext">Amazon QR Code Scanner</div>
 
-    <!-- Interactive Input Container Module -->
     <div class="input-container">
         <input type="text" id="textInput" placeholder="Scan QR Code" autofocus>
         <div id="clearBtn">X</div>
     </div>
     
-    <!-- Active Input Warnings Display -->
     <div id="typingWarning">Warning: text box is not clear, please clear it before scanning a QR code</div>
     
     <div id="alertBadge">Amazon QR Code Detected!</div>
     <div id="errorMessageContainer"></div>
     
-    <!-- Customer Packed Prompt Card -->
     <div id="packingQuestionContainer" class="prompt-container">
         <div class="packing-title">This item is marked as customer packed. Has it been properly packed yet?</div>
         <div class="packing-btn-group">
@@ -410,7 +400,6 @@
         </div>
     </div>
 
-    <!-- Happy Return Prompt Card -->
     <div id="happyReturnQuestionContainer" class="prompt-container">
         <div class="prompt-title">This appears to be a happy return, have you already tried accepting through PostalMate?</div>
         <div class="prompt-btn-group">
@@ -419,13 +408,11 @@
         </div>
     </div>
 
-    <!-- Container managing output elements during physical label routing -->
     <div id="printZone">
         <div id="printHeader"></div>
         <div id="qrcode"></div>
     </div>
     
-    <!-- Consolidated wrapper processing data view and copy interactions -->
     <div id="dataDisplayWrapper">
         <div id="scannedTextDisplay"></div>
         <button id="copyRawBtn">Copy All</button>
@@ -436,7 +423,6 @@
         <button id="overrideBtn">⚠️ Force Print (Override)</button>
     </div>
 
-    <!-- Operations Manual Footer (Hidden during printing execution) -->
     <div id="instructions">
         <div class="instruction-title">Counter Instructions</div>
         1. Scan QR code, ensure textbox is clear first<br>
@@ -444,8 +430,7 @@
         3. Press CTRL + V in PostalMate to automatically paste RMA number
     </div>
 
-    <!-- NEW: Release Version Tracking Footer -->
-    <div id="versionFooter">Amazon Scanner v1.0</div>
+    <div id="versionFooter">Amazon Scanner v1.1</div>
 </div>
 
 <script>
@@ -457,11 +442,9 @@
     const errorMessageContainer = document.getElementById('errorMessageContainer');
     const overrideBtn = document.getElementById('overrideBtn');
     
-    // Clear Input / Stray Keystroke Elements
     const clearBtn = document.getElementById('clearBtn');
     const typingWarning = document.getElementById('typingWarning');
 
-    // Verification Workflow Modules
     const packingQuestionContainer = document.getElementById('packingQuestionContainer');
     const packingNoBtn = document.getElementById('packingNoBtn');
     const packingYesBtn = document.getElementById('packingYesBtn');
@@ -470,12 +453,14 @@
     const happyReturnNoBtn = document.getElementById('happyReturnNoBtn');
     const happyReturnYesBtn = document.getElementById('happyReturnYesBtn');
 
-    // Text Display Elements
     const dataDisplayWrapper = document.getElementById('dataDisplayWrapper');
     const scannedTextDisplay = document.getElementById('scannedTextDisplay');
     const copyRawBtn = document.getElementById('copyRawBtn');
 
-    function invertCase(str) {
+    /* NEW: Pattern-Based Case Inversion 
+      This flips the text casing unconditionally, handling both upper/lower mistakes.
+    */
+    function flipCase(str) {
         return str.split('').map(char => {
             if (char === char.toUpperCase()) {
                 return char.toLowerCase();
@@ -485,9 +470,6 @@
         }).join('');
     }
 
-    /* 
-      REAL-TIME STRAY KEYSTROKE PROTECTION DETECTOR
-    */
     input.addEventListener('input', function() {
         if (input.value.length > 0) {
             input.classList.add('input-error');
@@ -500,9 +482,6 @@
         }
     });
 
-    /* 
-      INLINE CLEAR BUTTON EVENT ACTION
-    */
     clearBtn.addEventListener('click', function() {
         input.value = '';
         input.classList.remove('input-error');
@@ -517,12 +496,21 @@
 
             if (text.trim() === '') return;
 
-            if (event.getModifierState('CapsLock')) {
-                text = invertCase(text);
-                input.value = text;
+            /* NEW CAPS LOCK PARSING ENGINE:
+              Checks the explicit string content instead of hardware states.
+              If the known prefixes are scanned as lowercase (e.g., 'afnlf', 'hr'), 
+              the text is immediately flipped back to uppercase.
+            */
+            const lowerCaseText = text.toLowerCase();
+            if (lowerCaseText.startsWith('afnlf') || lowerCaseText.startsWith('hr')) {
+                // If it starts with a lowercase version of our known headers, caps lock is inverted.
+                if (text.startsWith('a') || text.startsWith('h')) {
+                    text = flipCase(text);
+                    input.value = text;
+                }
             }
 
-            // Flush operational canvas and structural view states immediately
+            // Flush UI
             qrContainer.innerHTML = '';
             printHeader.textContent = '';
             printHeader.style.display = 'none';
@@ -535,7 +523,6 @@
             dataDisplayWrapper.style.display = 'none';
             scannedTextDisplay.textContent = '';
 
-            // Automatically clean the inline validation flags during evaluation
             input.classList.remove('input-error');
             typingWarning.style.display = 'none';
             clearBtn.style.display = 'none';
@@ -543,8 +530,7 @@
             const sections = text.split('|');
             const firstSection = sections[0];
 
-            /* 
-              1. ROUTE INTERCEPTION: HAPPY RETURN ENGINE DETECTOR (Starts with HR)
+            /* ROUTING ENGINE
             */
             if (text.startsWith('HR')) {
                 window.pendingText = text;
@@ -552,9 +538,6 @@
                 happyReturnQuestionContainer.style.display = 'block';
                 input.value = ''; 
 
-            /* 
-              2. ROUTE: NO BOX NO LABEL (AFNLFBF)
-            */
             } else if (firstSection.startsWith('AFNLFBF')) {
                 const rmaNumber = sections[1]; 
                 
@@ -584,18 +567,12 @@
                     input.focus();    
                 }, 250);
 
-            /* 
-              3. ROUTE: CUSTOMER PACKED STAGE (AFNLF)
-            */
             } else if (firstSection.startsWith('AFNLF')) {
                 window.pendingText = text;
                 window.pendingRma = sections[1] || '';
                 packingQuestionContainer.style.display = 'block';
                 input.value = ''; 
 
-            /* 
-              4. ROUTE: UNKNOWN / COUNTER VETTING WARNING OVERRIDE
-            */
             } else {
                 errorMessageContainer.style.backgroundColor = '#fff3cd'; 
                 errorMessageContainer.style.border = '2px solid #ffc107'; 
@@ -611,9 +588,6 @@
         }
     });
 
-    /* 
-      HAPPY RETURN WORKFLOW: YES CLICK
-    */
     happyReturnYesBtn.addEventListener('click', function() {
         const text = window.pendingText;
         const rmaNumber = window.pendingRma;
@@ -650,9 +624,6 @@
         delete window.pendingRma;
     });
 
-    /* 
-      HAPPY RETURN WORKFLOW: NO CLICK (Return to home panel)
-    */
     happyReturnNoBtn.addEventListener('click', function() {
         happyReturnQuestionContainer.style.display = 'none';
         delete window.pendingText;
@@ -660,9 +631,6 @@
         input.focus();
     });
 
-    /* 
-      CUSTOMER PACKED VERIFICATION: YES CLICK
-    */
     packingYesBtn.addEventListener('click', function() {
         const text = window.pendingText;
         const rmaNumber = window.pendingRma;
@@ -699,9 +667,6 @@
         delete window.pendingRma;
     });
 
-    /* 
-      CUSTOMER PACKED VERIFICATION: NO CLICK
-    */
     packingNoBtn.addEventListener('click', function() {
         packingQuestionContainer.style.display = 'none';
         errorMessageContainer.style.backgroundColor = '#f8d7da'; 
@@ -720,9 +685,6 @@
         input.focus();
     });
 
-    /* 
-      OVERRIDE CLICK ROUTINE
-    */
     overrideBtn.addEventListener('click', function() {
         const textToPrint = window.lastRejectedText;
         if (!textToPrint) return;
@@ -753,9 +715,6 @@
         delete window.lastRejectedText;
     });
 
-    /* 
-      MANUAL RAW DATA DATA-TABLE COPY ACTION LOOP
-    */
     copyRawBtn.addEventListener('click', function() {
         const textToCopy = scannedTextDisplay.textContent;
         if (!textToCopy) return;
