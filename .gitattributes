@@ -1,0 +1,6 @@
+# Windows batch files are launched by cmd.exe, which requires CRLF line endings.
+# Mark them -text so git stores the bytes verbatim (no LF normalization). This keeps
+# the committed blob CRLF, which is exactly what raw.githubusercontent.com serves and
+# what users download and run — an LF-only .bat can misbehave in cmd's header parsing.
+*.bat -text
+*.cmd -text
