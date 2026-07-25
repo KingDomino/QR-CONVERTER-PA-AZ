@@ -419,14 +419,14 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
     </div>
 
     <div id="happyReturnQuestionContainer" class="prompt-container">
-        <div class="prompt-title">This appears to be a happy return, have you already tried accepting through PostalMate?</div>
+        <div class="prompt-title">This appears to be a Happy Return, have you already tried accepting through PostalMate?</div>
         <div class="prompt-btn-group">
             <button id="happyReturnNoBtn" class="btn-action btn-no">No</button>
             <button id="happyReturnYesBtn" class="btn-action btn-yes">Yes</button>
         </div>
     </div>
 
-    <div id="happyReturnNote" class="prompt-note">Please attempt to accept this return in PostalMate first.</div>
+    <div id="happyReturnNote" class="prompt-note">Please try this return in PostalMate first.</div>
 
     <div id="printZone">
         <div id="printHeader"></div>
@@ -440,7 +440,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
     
     <div class="button-group">
         <button id="reprintBtn">Reprint Last Label</button>
-        <button id="overrideBtn">⚠️ Force Print (Override)</button>
+        <button id="overrideBtn">Force Print (Override)</button>
     </div>
 
     <div id="instructions">
@@ -450,7 +450,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
         3. Press CTRL + V in PostalMate to automatically paste RMA number
     </div>
 
-    <div id="versionFooter">Amazon Scanner v1.3.1</div>
+    <div id="versionFooter">Amazon Scanner v1.3.2</div>
 </div>
 
 <script>
@@ -625,7 +625,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
         alertBadge.style.display = 'block';
         alertBadge.style.backgroundColor = '#ffc107';
         alertBadge.style.color = '#212529';
-        alertBadge.innerHTML = 'Happy Return Detected! Full QR code copied.<br>&#9888; Please mark the auto-detect tracking number as UPS in PostalMate, NOT Happy Returns.';
+        alertBadge.innerHTML = 'Full QR code copied.<br>&#9888; Please mark the auto-detect tracking number as UPS in PostalMate, NOT Happy Returns.';
         navigator.clipboard.writeText(text).catch(err => {});
 
         printHeader.textContent = "Happy Return";
