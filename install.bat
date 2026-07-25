@@ -9,11 +9,8 @@ exit /b
 # ============================================================
 
 # --- Network hardening for Windows PowerShell 5.1 ---
-# GitHub refuses connections below TLS 1.2; PS 5.1 does not enable it by default.
 [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
-# Suppress the Invoke-WebRequest progress bar (it dominates runtime and looks like a hang on PS 5.1).
 $ProgressPreference = 'SilentlyContinue'
-# Route through the system proxy with the logged-in user's credentials, if any.
 try { [System.Net.WebRequest]::DefaultWebProxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials } catch {}
 
 $AppUrl     = 'https://raw.githubusercontent.com/KingDomino/QR-CONVERTER-PA-AZ/main/app.html'
