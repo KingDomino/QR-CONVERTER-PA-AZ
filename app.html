@@ -169,6 +169,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
             line-height: 1.4;
         }
         .prompt-note {
+            display: none;
             font-weight: bold;
             color: #856404;
             background-color: #fff3cd;
@@ -419,12 +420,13 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
 
     <div id="happyReturnQuestionContainer" class="prompt-container">
         <div class="prompt-title">This appears to be a happy return, have you already tried accepting through PostalMate?</div>
-        <div class="prompt-note">Please attempt to accept this return in PostalMate first.</div>
         <div class="prompt-btn-group">
             <button id="happyReturnNoBtn" class="btn-action btn-no">No</button>
             <button id="happyReturnYesBtn" class="btn-action btn-yes">Yes</button>
         </div>
     </div>
+
+    <div id="happyReturnNote" class="prompt-note">Please attempt to accept this return in PostalMate first.</div>
 
     <div id="printZone">
         <div id="printHeader"></div>
@@ -448,7 +450,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
         3. Press CTRL + V in PostalMate to automatically paste RMA number
     </div>
 
-    <div id="versionFooter">Amazon Scanner v1.3</div>
+    <div id="versionFooter">Amazon Scanner v1.3.1</div>
 </div>
 
 <script>
@@ -470,6 +472,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
     const happyReturnQuestionContainer = document.getElementById('happyReturnQuestionContainer');
     const happyReturnNoBtn = document.getElementById('happyReturnNoBtn');
     const happyReturnYesBtn = document.getElementById('happyReturnYesBtn');
+    const happyReturnNote = document.getElementById('happyReturnNote');
 
     const dataDisplayWrapper = document.getElementById('dataDisplayWrapper');
     const scannedTextDisplay = document.getElementById('scannedTextDisplay');
@@ -533,11 +536,15 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
             printHeader.textContent = '';
             printHeader.style.display = 'none';
             alertBadge.style.display = 'none';
+            // Reset any per-scan inline overrides so the badge returns to its green default.
+            alertBadge.style.backgroundColor = '';
+            alertBadge.style.color = '';
             reprintBtn.style.display = 'none';
-            errorMessageContainer.style.display = 'none'; 
-            overrideBtn.style.display = 'none'; 
+            errorMessageContainer.style.display = 'none';
+            overrideBtn.style.display = 'none';
             packingQuestionContainer.style.display = 'none';
             happyReturnQuestionContainer.style.display = 'none';
+            happyReturnNote.style.display = 'none';
             dataDisplayWrapper.style.display = 'none';
             scannedTextDisplay.textContent = '';
 
@@ -614,7 +621,10 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
 
         // Happy returns: copy the ENTIRE scanned QR text (not just the RMA) so it can
         // be pasted directly into PostalMate, and warn about the tracking-number carrier.
+        // Use a yellow (not green) badge so this warning is hard to miss.
         alertBadge.style.display = 'block';
+        alertBadge.style.backgroundColor = '#ffc107';
+        alertBadge.style.color = '#212529';
         alertBadge.innerHTML = 'Happy Return Detected! Full QR code copied.<br>&#9888; Please mark the auto-detect tracking number as UPS in PostalMate, NOT Happy Returns.';
         navigator.clipboard.writeText(text).catch(err => {});
 
@@ -643,6 +653,8 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
 
     happyReturnNoBtn.addEventListener('click', function() {
         happyReturnQuestionContainer.style.display = 'none';
+        // They have not accepted it in PostalMate yet -> remind them to do that first.
+        happyReturnNote.style.display = 'block';
         delete window.pendingText;
         delete window.pendingRma;
         input.focus();
