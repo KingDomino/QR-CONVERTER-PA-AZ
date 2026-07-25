@@ -168,6 +168,17 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
             font-size: 14px;
             line-height: 1.4;
         }
+        .prompt-note {
+            font-weight: bold;
+            color: #856404;
+            background-color: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
         .prompt-btn-group {
             display: flex;
             gap: 12px;
@@ -408,6 +419,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
 
     <div id="happyReturnQuestionContainer" class="prompt-container">
         <div class="prompt-title">This appears to be a happy return, have you already tried accepting through PostalMate?</div>
+        <div class="prompt-note">Please attempt to accept this return in PostalMate first.</div>
         <div class="prompt-btn-group">
             <button id="happyReturnNoBtn" class="btn-action btn-no">No</button>
             <button id="happyReturnYesBtn" class="btn-action btn-yes">Yes</button>
@@ -436,7 +448,7 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
         3. Press CTRL + V in PostalMate to automatically paste RMA number
     </div>
 
-    <div id="versionFooter">Amazon Scanner v1.2</div>
+    <div id="versionFooter">Amazon Scanner v1.3</div>
 </div>
 
 <script>
@@ -596,16 +608,15 @@ var QRCode;!function(){function a(a){this.mode=c.MODE_8BIT_BYTE,this.data=a,this
 
     happyReturnYesBtn.addEventListener('click', function() {
         const text = window.pendingText;
-        const rmaNumber = window.pendingRma;
         if (!text) return;
 
         happyReturnQuestionContainer.style.display = 'none';
 
-        if (rmaNumber) {
-            alertBadge.style.display = 'block';
-            alertBadge.textContent = `Happy Return Detected! RMA Copied: ${rmaNumber}`;
-            navigator.clipboard.writeText(rmaNumber).catch(err => {});
-        }
+        // Happy returns: copy the ENTIRE scanned QR text (not just the RMA) so it can
+        // be pasted directly into PostalMate, and warn about the tracking-number carrier.
+        alertBadge.style.display = 'block';
+        alertBadge.innerHTML = 'Happy Return Detected! Full QR code copied.<br>&#9888; Please mark the auto-detect tracking number as UPS in PostalMate, NOT Happy Returns.';
+        navigator.clipboard.writeText(text).catch(err => {});
 
         printHeader.textContent = "Happy Return";
         printHeader.style.display = "block";
